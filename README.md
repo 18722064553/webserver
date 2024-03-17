@@ -9,3 +9,5 @@
 	  - timeout：超时（多次时间轮询一次）
   - select处理的最大int长度是1024，是在内核里确定的，如果io更大则会提示数组越界
   - ``gcc -o select select.c``
+- poll.c：是select在参数上的一个优化，减少了 一些不必要参数的复制，他们底层实现是一样，都是基于select设计的
+  - ``gcc -o poll poll.c``  
