@@ -2,3 +2,10 @@
   - ``gcc -o multi-io multi-io.c``
 - multi-thread-io.c：用线程函数实现单服务器多客户端TCP通信
   -  ``gcc -o multi-thread-io multi-thread-io.c -lpthread``
+- selcet.c：在一个线程内实现单服务器多客户端的TCP通信
+  - ``select(maxfd, rset, wset, eset, timeout)``
+	  - maxfd：最大的fd（fd是依次增加的int值。其中0是stdin，1是stdout，2是stderror）
+	  - rset：可读集合、wset：可写集合、eset：出错集合
+	  - timeout：超时（多次时间轮询一次）
+  - select处理的最大int长度是1024，是在内核里确定的，如果io更大则会提示数组越界
+  - ``gcc -o select select.c``
