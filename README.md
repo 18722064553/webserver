@@ -10,4 +10,9 @@
   - select处理的最大int长度是1024，是在内核里确定的，如果io更大则会提示数组越界
   - ``gcc -o select select.c``
 - poll.c：是select在参数上的一个优化，减少了 一些不必要参数的复制，他们底层实现是一样，都是基于select设计的
-  - ``gcc -o poll poll.c``  
+  - ``gcc -o poll poll.c``
+- epoll.c：解决了大量io的问题,在epoll加入linux内核后使得linux可以用在服务端，包括三个函数：
+  - epoll_create()
+  - epoll_ctl()
+  - epoll_wait() 
+  - ``gcc -o epoll epoll.c``
