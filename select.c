@@ -25,7 +25,7 @@ int main(){
 
 
 	int name_fd = listen(sockfd, 10);
-fd_set rfds, rset;
+	fd_set rfds, rset;
 	FD_ZERO(&rfds);
 	FD_SET(sockfd, &rfds);
 
@@ -50,11 +50,7 @@ fd_set rfds, rset;
 			FD_SET(clientfd, &rfds);
 			maxfd = clientfd;
 		}
-
-// close
-
-// rfds --> i , FD_CLR
-
+		
 		int i = 0;
 		for (i = sockfd+1;i <= maxfd;i ++) {
 
