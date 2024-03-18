@@ -126,7 +126,8 @@ int send_cb(int fd) {
 }
 
 
-int init_server(unsigned short port) {
+// tcp 
+int main() {
 
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -135,7 +136,7 @@ int init_server(unsigned short port) {
 
 	serveraddr.sin_family = AF_INET;
 	serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	serveraddr.sin_port = htons(port);
+	serveraddr.sin_port = htons(2048);
 
 	if (-1 == bind(sockfd, (struct sockaddr*)&serveraddr, sizeof(struct sockaddr))) {
 		perror("bind");
@@ -144,25 +145,12 @@ int init_server(unsigned short port) {
 
 	listen(sockfd, 10);
 
-	return sockfd;
-}
+	connlist[sockfd].fd = sockfd;
+	connlist[sockfd].recv_t.accept_callback = accept_cb;
 
-// tcp 
-int main() {
-
-	int port_count = 20;
-	unsigned short port = 2048;
-	int i = 0;
-
-	
 	epfd = epoll_create(1); // int size
 
-	for (i = 0;i < port_count;i ++) {
-		int sockfd = init_server(port + i);  // 2048, 2049, 2050, 2051 ... 2057
-		connlist[sockfd].fd = sockfd;
-		connlist[sockfd].recv_t.accept_callback = accept_cb;
-		set_event(sockfd, EPOLLIN, 1);
-	}
+	set_event(sockfd, EPOLLIN, 1);
 
 	struct epoll_event events[1024] = {0};
 	
