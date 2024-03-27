@@ -1,5 +1,4 @@
 - multi-io.c：用于单服务器多客户端TCP通信
-  - ``gcc -o multi-io multi-io.c``
 - multi-thread-io.c：用线程函数实现单服务器多客户端TCP通信
   -  ``gcc -o multi-thread-io multi-thread-io.c -lpthread``
 - selcet.c：在一个线程内实现单服务器多客户端的TCP通信
@@ -8,11 +7,13 @@
 	  - rset：可读集合、wset：可写集合、eset：出错集合
 	  - timeout：超时（多次时间轮询一次）
   - select处理的最大int长度是1024，是在内核里确定的，如果io更大则会提示数组越界
-  - ``gcc -o select select.c``
 - poll.c：是select在参数上的一个优化，减少了 一些不必要参数的复制，他们底层实现是一样，都是基于select设计的
-  - ``gcc -o poll poll.c``
-- epoll.c：解决了大量io的问题,在epoll加入linux内核后使得linux可以用在服务端，包括三个函数：
+- epoll.c：解决了大量io的问题，在epoll加入linux内核后使得linux可以用在服务端，包括三个函数：
   - epoll_create()
   - epoll_ctl()
   - epoll_wait() 
-  - ``gcc -o epoll epoll.c``
+- reactor.c：封装了epoll，通过事件驱动的方式管理并发连接!
+- webserver.c：可以使得一个网页向服务器发送连接请求
+- millions_connections.c：通过mul_port_client_epoll.c向服务端不断发送连接请求以建立连接，最终实现百万级连接
+![Uploading 2e19bb5ec83f4d6328fac2d310c7abd.png…]()
+
